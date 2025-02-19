@@ -3,12 +3,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:MarkdownEditor.ViewModels"
+             xmlns:markdownEditor="clr-namespace:MarkdownEditor"
+             xmlns:controls="clr-namespace:MarkdownEditor.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MarkdownEditor.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <vm:MainViewModel />
-  </Design.DataContext>
+	<DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Toggle Preview"/>
+            </MenuItem>
+        </Menu>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid ColumnDefinitions="*,Auto,*">
+            <controls:MarkdownEditorView Grid.Column="0"/>
+            <GridSplitter Grid.Column="1" Width="5" Background="Gray"/>
+            <controls:MarkdownPreviewView Grid.Column="2"/>
+        </Grid>
+    </DockPanel>
 </UserControl>
