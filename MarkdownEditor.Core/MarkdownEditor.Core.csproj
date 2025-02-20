@@ -10,4 +10,9 @@
     <ProjectReference Include="..\MarkdownEditor.Common\MarkdownEditor.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

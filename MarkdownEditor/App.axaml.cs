@@ -3,8 +3,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
-using MarkdownEditor.Core.Interfaces;
-using MarkdownEditor.Core.Services;
 using MarkdownEditor.ViewModels;
 using MarkdownEditor.ViewModels.Controls;
 using MarkdownEditor.Views;
@@ -30,8 +28,6 @@ public class App : Application
         services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<MarkdownEditorViewModel>();
         services.AddSingleton<MarkdownPreviewViewModel>();
-
-        services.AddSingleton<IFileProvider, FileProvider>();
 
         ServiceProvider = services.BuildServiceProvider();
 
