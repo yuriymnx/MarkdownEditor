@@ -1,22 +1,35 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using MarkdownEditor.Utils;
+using CommunityToolkit.Mvvm.Input;
+using Markdig;
 using MarkdownEditor.ViewModels.Base;
 
 namespace MarkdownEditor.ViewModels.Controls;
 
-internal partial class MarkdownEditorViewModel : ViewModelBase
+public partial class MarkdownEditorViewModel : ViewModelBase
 {
-    private readonly IMessenger _messenger;
-
     [ObservableProperty]
     private string _markdownText;
 
-    public MarkdownEditorViewModel(IMessenger messenger)
+    [ObservableProperty]
+    private string? _htmlPreview;
+
+    [ObservableProperty]
+    private bool _isPreviewVisible;
+
+    [RelayCommand]
+    private void TogglePreview()
     {
-        _messenger = messenger;
-        _markdownText = string.Empty;
+        IsPreviewVisible = !IsPreviewVisible;
     }
 
-    partial void OnMarkdownTextChanged(string value) => _messenger.Send(new MarkdownUpdatedMessage(value));
+    public MarkdownEditorViewModel()
+    {
+        IsPreviewVisible = true;
+        MarkdownText = @"<b> abracadabra </b>";
+    }
+
+    partial void OnMarkdownTextChanged(string value)
+    {
+        HtmlPreview = Markdown.ToHtml(value);
+    }
 }

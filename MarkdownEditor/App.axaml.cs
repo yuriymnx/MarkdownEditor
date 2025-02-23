@@ -2,7 +2,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using CommunityToolkit.Mvvm.Messaging;
 using MarkdownEditor.ViewModels;
 using MarkdownEditor.ViewModels.Controls;
 using MarkdownEditor.Views;
@@ -25,9 +24,7 @@ public class App : Application
         var services = new ServiceCollection();
 
         services.AddSingleton<MainViewModel>();
-        services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
         services.AddSingleton<MarkdownEditorViewModel>();
-        services.AddSingleton<MarkdownPreviewViewModel>();
 
         ServiceProvider = services.BuildServiceProvider();
 

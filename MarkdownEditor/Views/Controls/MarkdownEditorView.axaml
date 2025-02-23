@@ -2,12 +2,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:MarkdownEditor.ViewModels.Controls"
+             xmlns:controls="clr-namespace:MarkdownEditor.ViewModels.Controls" 
+             xmlns:avalonia="clr-namespace:TheArtOfDev.HtmlRenderer.Avalonia;assembly=Avalonia.HtmlRenderer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MarkdownEditor.Views.Controls.MarkdownEditorView">
-    <TextBox Text="{Binding MarkdownText, UpdateSourceTrigger=PropertyChanged}"
-             AcceptsReturn="True"
-             TextWrapping="Wrap"
-             VerticalAlignment="Stretch"
-             HorizontalAlignment="Stretch"/>
+
+    <Design.DataContext>
+        <controls:MarkdownEditorViewModel/>
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,Auto,*">
+		<TextBox Text="{Binding MarkdownText, UpdateSourceTrigger=PropertyChanged}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Stretch"
+                 HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Width="5" Background="Gray"/>
+		<avalonia:HtmlPanel Grid.Column="2" 
+                            IsVisible="{Binding IsPreviewVisible}"
+                            Text="{Binding HtmlPreview}"/>
+    </Grid>
+
 </UserControl>
