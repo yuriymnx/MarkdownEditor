@@ -4,21 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:MarkdownEditor.ViewModels.Controls" 
              xmlns:avalonia="clr-namespace:TheArtOfDev.HtmlRenderer.Avalonia;assembly=Avalonia.HtmlRenderer"
+             xmlns:converters="clr-namespace:MarkdownEditor.Converters"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MarkdownEditor.Views.Controls.MarkdownEditorView">
 
+    <UserControl.Resources>
+		<converters:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter" />
+    </UserControl.Resources>
     <Design.DataContext>
         <controls:MarkdownEditorViewModel/>
     </Design.DataContext>
 
-    <Grid ColumnDefinitions="*,Auto,*">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="{Binding IsPreviewVisible, Converter={StaticResource BoolToGridLengthConverter}}" />
+        </Grid.ColumnDefinitions>
 		<TextBox Text="{Binding MarkdownText, UpdateSourceTrigger=PropertyChanged}"
                  AcceptsReturn="True"
                  TextWrapping="Wrap"
                  VerticalAlignment="Stretch"
                  HorizontalAlignment="Stretch"/>
         <GridSplitter Grid.Column="1" Width="5" Background="Gray"/>
-		<avalonia:HtmlPanel Grid.Column="2" 
+		<avalonia:HtmlPanel Grid.Column="2"
                             IsVisible="{Binding IsPreviewVisible}"
                             Text="{Binding HtmlPreview}"/>
     </Grid>

@@ -25,8 +25,4 @@
     <ProjectReference Include="..\MarkdownEditor.Common\MarkdownEditor.Common.csproj" />
     <ProjectReference Include="..\MarkdownEditor.Core\MarkdownEditor.Core.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
 </Project>
