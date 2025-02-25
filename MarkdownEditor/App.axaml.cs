@@ -2,6 +2,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using MarkdownEditor.Core.Services;
+using MarkdownEditor.Core.Services.Interfaces;
 using MarkdownEditor.ViewModels;
 using MarkdownEditor.ViewModels.Controls;
 using MarkdownEditor.Views;
@@ -25,6 +27,8 @@ public class App : Application
 
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<MarkdownEditorViewModel>();
+
+        services.AddSingleton<IAutoCompleteService, AutoCompleteService>();
 
         ServiceProvider = services.BuildServiceProvider();
 
