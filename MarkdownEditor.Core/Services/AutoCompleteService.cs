@@ -9,37 +9,49 @@ public class AutoCompleteService : IAutoCompleteService
         "*",
         "_",
         "~~",
-        "'",
+        "''",
+        "**",
+        "__"
     };
 
-    private readonly List<char> _currentSequence = new(5);
-
+    private readonly List<char> _currentSequence = new();
     private char? _lastChar;
 
     public void Clear()
     {
         _currentSequence.Clear();
+        _lastChar = null;
     }
 
     public void NextChar(char c)
     {
         _lastChar = c;
-        if (IsCharControlling())
-        {
-            _currentSequence.Add(c);
-        }
+        _currentSequence.Add(c);
 
-        else
+        if (!IsCurrentSequenceValid())
         {
             _currentSequence.Clear();
         }
     }
 
-
-    public IEnumerable<string> SuggestedEndings => _completions.Where(x => x.ElementAtOrDefault(_currentSequence.Count) == _lastChar);
-
-    private bool IsCharControlling()
+    public IEnumerable<string> SuggestedEndings
     {
-        return _completions.Any(x => x.ElementAtOrDefault(_currentSequence.Count) == _lastChar);
+        get
+        {
+            if (!_lastChar.HasValue || _currentSequence.Count == 0)
+                return Enumerable.Empty<string>();
+
+            string currentString = new(_currentSequence.ToArray());
+            return _completions.Where(x => x.StartsWith(currentString) && x.Length > currentString.Length);
+        }
+    }
+
+    private bool IsCurrentSequenceValid()
+    {
+        if (_currentSequence.Count == 0)
+            return false;
+
+        string currentString = new(_currentSequence.ToArray());
+        return _completions.Any(x => x.StartsWith(currentString));
     }
 }
